@@ -1,4 +1,4 @@
-module github.com/upbound/upjet-provider-template
+module github.com/valkiriaaquaticamendi/provider-awx-ilijamt
 
 go 1.21
 
