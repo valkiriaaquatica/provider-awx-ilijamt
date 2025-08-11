@@ -58,3 +58,9 @@ make build
 
 For filing bugs, suggesting improvements, or requesting new features, please
 open an [issue](https://github.com/valkiriaaquaticamendi/provider-awx-ilijamt/issues).
+
+
+
+## IMPORTANT THINGS
+The actual provider in which is based https://registry.terraform.io/providers/ilijamt/awx/latest  DOES NOT have examples, so there is no examples-generated folder automatically when running the make generate command.
+
