@@ -9,6 +9,7 @@ import (
 
 	"github.com/crossplane/upjet/pkg/controller"
 
+	user "github.com/valkiriaaquatica/provider-awx-ilijamt/internal/controller/awxuser/user"
 	providerconfig "github.com/valkiriaaquatica/provider-awx-ilijamt/internal/controller/providerconfig"
 )
 
@@ -16,6 +17,7 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		user.Setup,
 		providerconfig.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {

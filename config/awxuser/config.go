@@ -2,7 +2,7 @@
 Copyright 2021 Upbound Inc.
 */
 
-package null
+package awxuser
 
 import (
 	ujconfig "github.com/crossplane/upjet/pkg/config"
@@ -10,8 +10,8 @@ import (
 
 // Configure configures the null group
 func Configure(p *ujconfig.Provider) {
-	p.AddResourceConfigurator("null_resource", func(r *ujconfig.Resource) {
-		r.Kind = "Resource"
+	p.AddResourceConfigurator("awx_user", func(r *ujconfig.Resource) {
+		r.ShortGroup = "AwxUser"
 		// And other overrides.
 	})
 }
