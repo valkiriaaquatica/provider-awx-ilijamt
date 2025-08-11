@@ -10,12 +10,12 @@ import (
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 
-	"github.com/valkiriaaquaticamendi/provider-awx-ilijamt/config/null"
+	"github.com/valkiriaaquatica/provider-awx-ilijamt/config/null"
 )
 
 const (
 	resourcePrefix = "awx-ilijamt"
-	modulePath     = "github.com/valkiriaaquaticamendi/provider-awx-ilijamt"
+	modulePath     = "github.com/valkiriaaquatica/provider-awx-ilijamt"
 )
 
 //go:embed schema.json

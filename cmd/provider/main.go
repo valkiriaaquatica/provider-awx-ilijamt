@@ -31,12 +31,12 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	"sigs.k8s.io/controller-runtime/pkg/metrics"
 
-	"github.com/valkiriaaquaticamendi/provider-awx-ilijamt/apis"
-	"github.com/valkiriaaquaticamendi/provider-awx-ilijamt/apis/v1alpha1"
-	"github.com/valkiriaaquaticamendi/provider-awx-ilijamt/config"
-	"github.com/valkiriaaquaticamendi/provider-awx-ilijamt/internal/clients"
-	"github.com/valkiriaaquaticamendi/provider-awx-ilijamt/internal/controller"
-	"github.com/valkiriaaquaticamendi/provider-awx-ilijamt/internal/features"
+	"github.com/valkiriaaquatica/provider-awx-ilijamt/apis"
+	"github.com/valkiriaaquatica/provider-awx-ilijamt/apis/v1alpha1"
+	"github.com/valkiriaaquatica/provider-awx-ilijamt/config"
+	"github.com/valkiriaaquatica/provider-awx-ilijamt/internal/clients"
+	"github.com/valkiriaaquatica/provider-awx-ilijamt/internal/controller"
+	"github.com/valkiriaaquatica/provider-awx-ilijamt/internal/features"
 )
 
 func main() {

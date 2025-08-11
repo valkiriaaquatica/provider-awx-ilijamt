@@ -15,7 +15,7 @@ import (
 
 	"github.com/crossplane/upjet/pkg/terraform"
 
-	"github.com/valkiriaaquaticamendi/provider-awx-ilijamt/apis/v1beta1"
+	"github.com/valkiriaaquatica/provider-awx-ilijamt/apis/v1beta1"
 )
 
 const (
