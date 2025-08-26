@@ -15,7 +15,7 @@ import (
 
 const (
 	resourcePrefix = "awxilijamt"
-	modulePath     = "github.com/valkiriaaquatica/provider-awxilijamt"
+	modulePath     = "github.com/valkiriaaquatica/provider-awx-ilijamt"
 )
 
 //go:embed schema.json
