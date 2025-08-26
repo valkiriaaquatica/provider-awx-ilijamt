@@ -31,12 +31,12 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	"sigs.k8s.io/controller-runtime/pkg/metrics"
 
-	"github.com/valkiriaaquatica/provider-awxilijamt/apis"
-	"github.com/valkiriaaquatica/provider-awxilijamt/apis/v1alpha1"
-	"github.com/valkiriaaquatica/provider-awxilijamt/config"
-	"github.com/valkiriaaquatica/provider-awxilijamt/internal/clients"
-	"github.com/valkiriaaquatica/provider-awxilijamt/internal/controller"
-	"github.com/valkiriaaquatica/provider-awxilijamt/internal/features"
+	"github.com/valkiriaaquatica/provider-awx-ilijamt/apis"
+	"github.com/valkiriaaquatica/provider-awx-ilijamt/apis/v1alpha1"
+	"github.com/valkiriaaquatica/provider-awx-ilijamt/config"
+	"github.com/valkiriaaquatica/provider-awx-ilijamt/internal/clients"
+	"github.com/valkiriaaquatica/provider-awx-ilijamt/internal/controller"
+	"github.com/valkiriaaquatica/provider-awx-ilijamt/internal/features"
 )
 
 func main() {
@@ -62,7 +62,7 @@ func main() {
 	kingpin.MustParse(app.Parse(os.Args[1:]))
 
 	zl := zap.New(zap.UseDevMode(*debug))
-	log := logging.NewLogrLogger(zl.WithName("provider-awxilijamt"))
+	log := logging.NewLogrLogger(zl.WithName("provider-awx-ilijamt"))
 	if *debug {
 		// The controller-runtime runs with a no-op logger by default. It is
 		// *very* verbose even at info level, so we only provide it a real
@@ -77,7 +77,7 @@ func main() {
 
 	mgr, err := ctrl.NewManager(cfg, ctrl.Options{
 		LeaderElection:   *leaderElection,
-		LeaderElectionID: "crossplane-leader-election-provider-awxilijamt",
+		LeaderElectionID: "crossplane-leader-election-provider-awx-ilijamt",
 		Cache: cache.Options{
 			SyncPeriod: syncPeriod,
 		},

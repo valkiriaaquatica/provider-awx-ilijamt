@@ -11,7 +11,7 @@ import (
 
 	"github.com/crossplane/upjet/pkg/pipeline"
 
-	"github.com/valkiriaaquatica/provider-awxilijamt/config"
+	"github.com/valkiriaaquatica/provider-awx-ilijamt/config"
 )
 
 func main() {

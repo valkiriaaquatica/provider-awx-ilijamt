@@ -1,4 +1,4 @@
-module github.com/valkiriaaquatica/provider-awxilijamt
+module github.com/valkiriaaquatica/provider-awx-ilijamt
 
 go 1.21
 

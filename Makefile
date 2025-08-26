@@ -1,7 +1,7 @@
 # ====================================================================================
 # Setup Project
 
-PROJECT_NAME ?= provider-awxilijamt
+PROJECT_NAME ?= provider-awx-ilijamt
 PROJECT_REPO ?= github.com/valkiriaaquatica/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION ?= 1.5.7
@@ -10,12 +10,12 @@ export TERRAFORM_VERSION ?= 1.5.7
 # licensed under BSL, which is not permitted.
 TERRAFORM_VERSION_VALID := $(shell [ "$(TERRAFORM_VERSION)" = "`printf "$(TERRAFORM_VERSION)\n1.6" | sort -V | head -n1`" ] && echo 1 || echo 0)
 
-export TERRAFORM_PROVIDER_SOURCE ?= hashicorp/null
-export TERRAFORM_PROVIDER_REPO ?= https://github.com/hashicorp/terraform-provider-null
-export TERRAFORM_PROVIDER_VERSION ?= 3.2.2
-export TERRAFORM_PROVIDER_DOWNLOAD_NAME ?= terraform-provider-null
-export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX ?= https://releases.hashicorp.com/$(TERRAFORM_PROVIDER_DOWNLOAD_NAME)/$(TERRAFORM_PROVIDER_VERSION)
-export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-null_v3.1.0_x5
+export TERRAFORM_PROVIDER_SOURCE ?= ilijamt/awx
+export TERRAFORM_PROVIDER_REPO ?= https://github.com/ilijamt/terraform-provider-awx
+export TERRAFORM_PROVIDER_VERSION ?= 24.6.1-0
+export TERRAFORM_PROVIDER_DOWNLOAD_NAME ?= terraform-provider-awx
+export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX ?= https://github.com/ilijamt/$(TERRAFORM_PROVIDER_DOWNLOAD_NAME)/releases/download//$(TERRAFORM_PROVIDER_VERSION) 
+export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-awx_v24.6.1-0
 export TERRAFORM_DOCS_PATH ?= docs/resources
 
 
@@ -93,7 +93,7 @@ fallthrough: submodules
 
 # NOTE(hasheddan): we force image building to happen prior to xpkg build so that
 # we ensure image is present in daemon.
-xpkg.build.provider-awxilijamt: do.build.images
+xpkg.build.provider-awx-ilijamt: do.build.images
 
 # NOTE(hasheddan): we ensure up is installed prior to running platform-specific
 # build steps in parallel to avoid encountering an installation race condition.
