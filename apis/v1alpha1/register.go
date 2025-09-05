@@ -13,7 +13,7 @@ import (
 
 // Package type metadata.
 const (
-	Group   = "template.upbound.io"
+	Group   = "awx-ilijamt.crossplane.io"
 	Version = "v1alpha1"
 )
 
