@@ -4,18 +4,18 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.14.0
-  name: resources.null.awx-ilijamt.upbound.io
+  name: inventories.awxinventory.crossplane.io
 spec:
-  group: null.awx-ilijamt.upbound.io
+  group: awxinventory.crossplane.io
   names:
     categories:
     - crossplane
     - managed
     - awx-ilijamt
-    kind: Resource
-    listKind: ResourceList
-    plural: resources
-    singular: resource
+    kind: Inventory
+    listKind: InventoryList
+    plural: inventories
+    singular: inventory
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -34,10 +34,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Resource is the Schema for the Resources API. The null_resource
-          resource implements the standard resource lifecycle but takes no further
-          action.hashicorp. The triggers argument allows specifying an arbitrary set
-          of values that, when changed, will cause the resource to be replaced.
+        description: Inventory is the Schema for the Inventorys API. <no value>
         properties:
           apiVersion:
             description: |-
@@ -57,7 +54,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ResourceSpec defines the desired state of Resource
+            description: InventorySpec defines the desired state of Inventory
             properties:
               deletionPolicy:
                 default: Delete
@@ -75,14 +72,32 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  triggers:
-                    additionalProperties:
-                      type: string
-                    description: |-
-                      running any associated provisioners.
-                      A map of arbitrary strings that, when changed, will force the null resource to be replaced, re-running any associated provisioners.
-                    type: object
-                    x-kubernetes-map-type: granular
+                  description:
+                    description: Optional description of this inventory.
+                    type: string
+                  hostFilter:
+                    description: Filter that will be applied to the hosts of this
+                      inventory.
+                    type: string
+                  kind:
+                    description: Kind of inventory being represented.
+                    type: string
+                  name:
+                    description: Name of this inventory.
+                    type: string
+                  organization:
+                    description: Organization containing this inventory.
+                    type: number
+                  preventInstanceGroupFallback:
+                    description: If enabled, the inventory will prevent adding any
+                      organization instance groups to the list of preferred instances
+                      groups to run associated job templates on.If this setting is
+                      enabled and you provided an empty list, the global instance
+                      groups will be applied.
+                    type: boolean
+                  variables:
+                    description: Inventory variables in JSON format
+                    type: string
                 type: object
               initProvider:
                 description: |-
@@ -97,14 +112,32 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
-                  triggers:
-                    additionalProperties:
-                      type: string
-                    description: |-
-                      running any associated provisioners.
-                      A map of arbitrary strings that, when changed, will force the null resource to be replaced, re-running any associated provisioners.
-                    type: object
-                    x-kubernetes-map-type: granular
+                  description:
+                    description: Optional description of this inventory.
+                    type: string
+                  hostFilter:
+                    description: Filter that will be applied to the hosts of this
+                      inventory.
+                    type: string
+                  kind:
+                    description: Kind of inventory being represented.
+                    type: string
+                  name:
+                    description: Name of this inventory.
+                    type: string
+                  organization:
+                    description: Organization containing this inventory.
+                    type: number
+                  preventInstanceGroupFallback:
+                    description: If enabled, the inventory will prevent adding any
+                      organization instance groups to the list of preferred instances
+                      groups to run associated job templates on.If this setting is
+                      enabled and you provided an empty list, the global instance
+                      groups will be applied.
+                    type: boolean
+                  variables:
+                    description: Inventory variables in JSON format
+                    type: string
                 type: object
               managementPolicies:
                 default:
@@ -273,23 +306,76 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.organization is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.organization)
+                || (has(self.initProvider) && has(self.initProvider.organization))'
           status:
-            description: ResourceStatus defines the observed state of Resource.
+            description: InventoryStatus defines the observed state of Inventory.
             properties:
               atProvider:
                 properties:
-                  id:
-                    description: (String) This is set to a random value at create
-                      time.
+                  description:
+                    description: Optional description of this inventory.
                     type: string
-                  triggers:
-                    additionalProperties:
-                      type: string
-                    description: |-
-                      running any associated provisioners.
-                      A map of arbitrary strings that, when changed, will force the null resource to be replaced, re-running any associated provisioners.
-                    type: object
-                    x-kubernetes-map-type: granular
+                  hasActiveFailures:
+                    description: Flag indicating whether any hosts in this inventory
+                      have failed.
+                    type: boolean
+                  hasInventorySources:
+                    description: Flag indicating whether this inventory has any external
+                      inventory sources.
+                    type: boolean
+                  hostFilter:
+                    description: Filter that will be applied to the hosts of this
+                      inventory.
+                    type: string
+                  hostsWithActiveFailures:
+                    description: Number of hosts in this inventory with active failures.
+                    type: number
+                  id:
+                    type: string
+                  inventorySourcesWithFailures:
+                    description: Number of external inventory sources in this inventory
+                      with failures.
+                    type: number
+                  kind:
+                    description: Kind of inventory being represented.
+                    type: string
+                  name:
+                    description: Name of this inventory.
+                    type: string
+                  organization:
+                    description: Organization containing this inventory.
+                    type: number
+                  pendingDeletion:
+                    description: Flag indicating the inventory is being deleted.
+                    type: boolean
+                  preventInstanceGroupFallback:
+                    description: If enabled, the inventory will prevent adding any
+                      organization instance groups to the list of preferred instances
+                      groups to run associated job templates on.If this setting is
+                      enabled and you provided an empty list, the global instance
+                      groups will be applied.
+                    type: boolean
+                  totalGroups:
+                    description: Total number of groups in this inventory.
+                    type: number
+                  totalHosts:
+                    description: Total number of hosts in this inventory.
+                    type: number
+                  totalInventorySources:
+                    description: Total number of external inventory sources configured
+                      within this inventory.
+                    type: number
+                  variables:
+                    description: Inventory variables in JSON format
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.

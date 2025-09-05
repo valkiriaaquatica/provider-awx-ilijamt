@@ -9,7 +9,8 @@ import (
 
 	"github.com/crossplane/upjet/pkg/controller"
 
-	resource "github.com/valkiriaaquatica/provider-awx-ilijamt/internal/controller/null/resource"
+	organization "github.com/valkiriaaquatica/provider-awx-ilijamt/internal/controller/awx/organization"
+	inventory "github.com/valkiriaaquatica/provider-awx-ilijamt/internal/controller/awxinventory/inventory"
 	providerconfig "github.com/valkiriaaquatica/provider-awx-ilijamt/internal/controller/providerconfig"
 )
 
@@ -17,7 +18,8 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
-		resource.Setup,
+		organization.Setup,
+		inventory.Setup,
 		providerconfig.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {

@@ -10,7 +10,8 @@ import (
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 
-	"github.com/valkiriaaquatica/provider-awx-ilijamt/config/null"
+	"github.com/valkiriaaquatica/provider-awx-ilijamt/config/awxorganization"
+	"github.com/valkiriaaquatica/provider-awx-ilijamt/config/awxinventory"
 )
 
 const (
@@ -36,7 +37,8 @@ func GetProvider() *ujconfig.Provider {
 
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
-		null.Configure,
+		awxorganization.Configure,
+		awxinventory.Configure,
 	} {
 		configure(pc)
 	}

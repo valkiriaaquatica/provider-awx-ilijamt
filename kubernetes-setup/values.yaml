@@ -1,0 +1,8 @@
+AWX:
+  enabled: true
+  name: awx
+  spec:
+    service_type: ClusterIP
+    ingress_type: none
+    hostname: awx.local
+    admin_user: admin

@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.14.0
-  name: providerconfigusages.awx-ilijamt.upbound.io
+  name: providerconfigusages.awx-ilijamt.crossplane.io
 spec:
-  group: awx-ilijamt.upbound.io
+  group: awx-ilijamt.crossplane.io
   names:
     categories:
     - crossplane

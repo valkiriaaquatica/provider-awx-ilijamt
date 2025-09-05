@@ -1,0 +1,13 @@
+apiVersion: awxinventory.crossplane.io/v1alpha1
+kind: Inventory
+metadata:
+  name: demo-inventory
+spec:
+  forProvider:
+    name: "Demo Inventory"
+    description: "Inventario de prueba gestionado por Crossplane"
+    organization: 1 # ID de la organización en AWX
+    kind: "" # tipo estándar
+    preventInstanceGroupFallback: false
+  providerConfigRef:
+    name: default

@@ -7,6 +7,7 @@ package clients
 import (
 	"context"
 	"encoding/json"
+	"strings"
 
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
 	"github.com/pkg/errors"
@@ -30,7 +31,7 @@ const (
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
 // returns Terraform provider setup configuration
 func TerraformSetupBuilder(version, providerSource, providerVersion string) terraform.SetupFn {
-	return func(ctx context.Context, client client.Client, mg resource.Managed) (terraform.Setup, error) {
+	return func(ctx context.Context, c client.Client, mg resource.Managed) (terraform.Setup, error) {
 		ps := terraform.Setup{
 			Version: version,
 			Requirement: terraform.ProviderRequirement{
@@ -39,21 +40,21 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 			},
 		}
 
-		configRef := mg.GetProviderConfigReference()
-		if configRef == nil {
+		ref := mg.GetProviderConfigReference()
+		if ref == nil {
 			return ps, errors.New(errNoProviderConfig)
 		}
 		pc := &v1beta1.ProviderConfig{}
-		if err := client.Get(ctx, types.NamespacedName{Name: configRef.Name}, pc); err != nil {
+		if err := c.Get(ctx, types.NamespacedName{Name: ref.Name}, pc); err != nil {
 			return ps, errors.Wrap(err, errGetProviderConfig)
 		}
 
-		t := resource.NewProviderConfigUsageTracker(client, &v1beta1.ProviderConfigUsage{})
-		if err := t.Track(ctx, mg); err != nil {
+		tracker := resource.NewProviderConfigUsageTracker(c, &v1beta1.ProviderConfigUsage{})
+		if err := tracker.Track(ctx, mg); err != nil {
 			return ps, errors.Wrap(err, errTrackUsage)
 		}
 
-		data, err := resource.CommonCredentialExtractor(ctx, pc.Spec.Credentials.Source, client, pc.Spec.Credentials.CommonCredentialSelectors)
+		data, err := resource.CommonCredentialExtractor(ctx, pc.Spec.Credentials.Source, c, pc.Spec.Credentials.CommonCredentialSelectors)
 		if err != nil {
 			return ps, errors.Wrap(err, errExtractCredentials)
 		}
@@ -62,11 +63,27 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 			return ps, errors.Wrap(err, errUnmarshalCredentials)
 		}
 
-		// Set credentials in Terraform provider configuration.
-		/*ps.Configuration = map[string]any{
-			"username": creds["username"],
-			"password": creds["password"],
-		}*/
+		cfg := map[string]any{}
+		if v := creds["hostname"]; v != "" {
+			cfg["hostname"] = v
+		}
+		// token tiene precedencia
+		if v := creds["token"]; v != "" {
+			cfg["token"] = v
+		} else {
+			if v := creds["username"]; v != "" {
+				cfg["username"] = v
+			}
+			if v := creds["password"]; v != "" {
+				cfg["password"] = v
+			}
+		}
+		if v := creds["verify_ssl"]; v != "" {
+			l := strings.ToLower(strings.TrimSpace(v))
+			cfg["verify_ssl"] = !(l == "false" || l == "0" || l == "no")
+		}
+
+		ps.Configuration = cfg
 		return ps, nil
 	}
 }

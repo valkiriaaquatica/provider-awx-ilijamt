@@ -1,0 +1,11 @@
+apiVersion: awx.crossplane.io/v1alpha1
+kind: Organization
+metadata:
+  name: demo-org
+spec:
+  forProvider:
+    name: "Demo Organization"
+    description: "Test otg Crossplane"
+    maxHosts: 50
+  providerConfigRef:
+    name: default
